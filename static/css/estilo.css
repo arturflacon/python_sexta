@@ -1,3 +1,55 @@
-* {
-    font-family: 'Courier New', Courier, monospace;
-}
+/* =======================================================================
+           PALETA DE CORES PERSONALIZADA (Sobrescrevendo o Bootstrap)
+           Base: Azul Petróleo (#105b63)
+           ======================================================================= */
+        :root {
+            /* Primary: Azul Petróleo */
+            --bs-primary: #105b63;
+            --bs-primary-rgb: 16, 91, 99;
+            
+            /* Success: Verde Esmeralda Suave */
+            --bs-success: #0d9488; 
+            --bs-success-rgb: 13, 148, 136;
+            
+            /* Info: Azul Oceano Calmo */
+            --bs-info: #0284c7; 
+            --bs-info-rgb: 2, 132, 199;
+            
+            /* Warning: Âmbar/Mostarda */
+            --bs-warning: #d97706; 
+            --bs-warning-rgb: 217, 119, 6;
+            
+            /* Danger: Carmesim Moderno (menos estourado que o vermelho puro) */
+            --bs-danger: #be123c; 
+            --bs-danger-rgb: 190, 18, 60;
+
+            /* Fonte mais moderna para combinar com o estilo minimalista */
+            --bs-font-sans-serif: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --bs-body-bg: #f8fafc; /* Fundo levemente cinza/azulado muito claro */
+            --bs-body-color: #334155; /* Texto principal grafite, mais suave que preto puro */
+        }
+
+        /* Ajustes específicos para garantir o contraste perfeito nos botões e alertas */
+        .btn-primary {
+            --bs-btn-color: #fff;
+            --bs-btn-bg: var(--bs-primary);
+            --bs-btn-border-color: var(--bs-primary);
+            --bs-btn-hover-color: #fff;
+            --bs-btn-hover-bg: #0b4046; /* Azul petróleo mais escuro no hover */
+            --bs-btn-hover-border-color: #0b4046;
+        }
+
+        .btn-outline-primary {
+            --bs-btn-color: var(--bs-primary);
+            --bs-btn-border-color: var(--bs-primary);
+            --bs-btn-hover-bg: var(--bs-primary);
+            --bs-btn-hover-color: #fff;
+        }
+
+        .text-primary { color: var(--bs-primary) !important; }
+        .bg-primary { background-color: var(--bs-primary) !important; }
+
+        /* Ajuste de margem superior para compensar a navbar fixa */
+        .main-content {
+            padding-top: 80px; 
+        }

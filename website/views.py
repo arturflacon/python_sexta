@@ -6,4 +6,7 @@ class IndexView(TemplateView):
 
 class ContatoView(TemplateView):
     template_name = "website/contato.html"
-    
+
+class SobreView(TemplateView):
+    template_name = "website/sobre.html"
+

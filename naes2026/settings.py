@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'naes2026.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-DATABASE_URL='postgresql://neondb_owner:npg_vsjH0OwYh1FN@ep-super-grass-acrytjzm-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
+DATABASE_URL='postgresql://neondb_owner:npg_tPjMRUl4mK6w@ep-broad-pine-acym8btz-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
 tmpPostgres = urlparse(DATABASE_URL)
 
 DATABASES = {
