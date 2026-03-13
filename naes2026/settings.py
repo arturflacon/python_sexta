@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # Ativar meus apps
     "website.apps.WebsiteConfig",
+    "alguel.apps.AluguelConfig",
 ]
 
 MIDDLEWARE = [
