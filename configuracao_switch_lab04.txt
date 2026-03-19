@@ -1,0 +1,45 @@
+! Configuração Inicial de Switch Cisco - Laboratório 4
+!
+! 1. Acessar o switch via console (Simulado no script)
+! 2. Navegar entre os modos de configuração do IOS (Simulado no script)
+!
+enable
+configure terminal
+!
+! 3. Configurar o nome do switch como "SW_Lab01"
+hostname SW_Lab01
+!
+! 4. Configurar uma senha segura para acesso ao modo EXEC privilegiado usando criptografia forte
+enable secret cisco123
+!
+! 5. Configurar senhas de acesso às linhas Console e VTY (Telnet/SSH), garantindo autenticação obrigatória
+line console 0
+ password console123
+ login
+exit
+!
+line vty 0 4
+ password vty123
+ login
+ ! 6. Limitar as conexões remotas via linha VTY para 5 sessões simultâneas (já definido por 0 4)
+ transport input all
+exit
+!
+! 7. Configurar a interface VLAN1 com IP 192.168.10.2, máscara 255.255.255.0 e gateway 192.168.10.1
+interface vlan 1
+ ip address 192.168.10.2 255.255.255.0
+ no shutdown
+exit
+!
+ip default-gateway 192.168.10.1
+!
+! 8. Aplicar criptografia básica para senhas
+service password-encryption
+!
+! 9. Configurar um banner MOTD: "ACESSO RESTRITO: Somente usuários autorizados!"
+banner motd "ACESSO RESTRITO: Somente usuários autorizados!"
+!
+! 10. Salvar as configurações para manter após reinicialização
+end
+copy running-config startup-config
+! Pressionar Enter para confirmar o nome do arquivo de destino
