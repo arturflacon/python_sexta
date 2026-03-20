@@ -1,11 +1,10 @@
-
 from django.db import models
 from django.contrib.auth.models import User
-
+ 
 
 class Cliente(models.Model):
     nome = models.CharField(max_length=255, verbose_name='Nome Completo', help_text='Nome completo do cliente.')
-    telefone = models.CharField(max_length=20, verbose_name='Telefone', help_text='Número de telefone do cliente.')
+    telefone = models.CharField(max_length=11, verbose_name='Telefone', help_text='Número de telefone do cliente.')
     usuario = models.OneToOneField(User, on_delete=models.PROTECT, verbose_name='Usuário', help_text='Usuário associado a este cliente.')
 
     class Meta:
@@ -13,7 +12,7 @@ class Cliente(models.Model):
         verbose_name_plural = 'Clientes'
 
     def __str__(self):
-        return self.nome
+        return self.nome   
 
 
 class Administrador(models.Model):
