@@ -4,7 +4,7 @@ from .models import Cliente, Administrador, Chacara, Reserva
 
 
 class IndexView(TemplateView):
-    template_name = "website/modelo.html"
+    template_name = "website/index.html"
 
 class ContatoView(TemplateView):
     template_name = "website/contato.html"
@@ -15,16 +15,24 @@ class SobreView(TemplateView):
 
 class ClienteCreate(CreateView):
     model = Cliente
-    fields = ['nome', 'telefone']  # 'usuario' será tratado em um fluxo de registro de usuário separado
-    template_name = 'website/cliente_form.html' # Você precisará criar este template
-    success_url = reverse_lazy('index') # Redireciona para a página inicial após o sucesso
+    fields = ['nome', 'telefone', 'usuario']
+    template_name = 'website/cliente_form.html'
+    success_url = reverse_lazy('index')
+    extra_context = {
+        'titulo': 'Cadastro de Cliente',
+        'botao': 'Cadastrar Cliente'
+    }
 
 
 class AdministradorCreate(CreateView):
     model = Administrador
-    fields = ['nome']  # 'usuario' será tratado em um fluxo de registro de usuário separado
-    template_name = 'website/administrador_form.html' # Você precisará criar este template
+    fields = ['nome', 'usuario']
+    template_name = 'website/administrador_form.html'
     success_url = reverse_lazy('index')
+    extra_context = {
+        'titulo': 'Cadastro de Administrador',
+        'botao': 'Cadastrar Administrador'
+    }
 
 
 class ChacaraCreate(CreateView):
@@ -33,8 +41,12 @@ class ChacaraCreate(CreateView):
         'nome', 'descricao', 'preco_diaria', 'tem_estacionamento',
         'tem_piscina', 'tem_churrasqueira', 'num_quartos', 'num_banheiros'
     ]
-    template_name = 'website/chacara_form.html' # Você precisará criar este template
+    template_name = 'website/chacara_form.html'
     success_url = reverse_lazy('index')
+    extra_context = {
+        'titulo': 'Cadastro de Chácara',
+        'botao': 'Cadastrar Chácara'
+    }
 
 
 class ReservaCreate(CreateView):
@@ -42,5 +54,9 @@ class ReservaCreate(CreateView):
     fields = [
         'cliente', 'chacara', 'data_inicio', 'data_fim', 'valor_total', 'status'
     ]
-    template_name = 'website/reserva_form.html' # Você precisará criar este template
+    template_name = 'website/reserva_form.html'
     success_url = reverse_lazy('index')
+    extra_context = {
+        'titulo': 'Nova Reserva',
+        'botao': 'Confirmar Reserva'
+    }

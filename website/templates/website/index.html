@@ -1,0 +1,83 @@
+{% extends "website/modelo.html" %}
+
+{% load static %}
+
+{% block hero %}
+<!-- Hero compacto para home -->
+<section class="hero py-5">
+  <div class="hero-noise"></div>
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <span class="badge bg-petrol-subtle text-primary fw-semibold px-3 py-2 rounded-pill mb-3 d-inline-block" style="font-size:.75rem; letter-spacing:.05em;">
+          <i class="bi bi-house-heart me-1"></i> Chácara Aluguel
+        </span>
+        <h1 class="display-4 fw-display text-white mb-3">Encontre a chácara ideal<br><span style="color:var(--petrol-lighter)">para o seu lazer</span></h1>
+        <p class="text-white-75 mb-4" style="max-width:560px; line-height:1.6">Explore as melhores opções de chácaras para eventos, finais de semana em família ou momentos de descanso. Simples, rápido e seguro.</p>
+        <div class="d-flex gap-3">
+          <a href="{% url "chacara_create" %}" class="btn btn-light fw-semibold px-4 rounded-2"><i class="bi bi-plus-circle me-1"></i>Anunciar Chácara</a>
+          <a href="{% url "reserva_create" %}" class="btn btn-auth px-4 rounded-2"><i class="bi bi-calendar-check me-1"></i>Fazer Reserva</a>
+        </div>
+      </div>
+      <div class="col-lg-5 d-none d-lg-block">
+        <div class="card-petrol p-4 rounded-2xl text-center" style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08)">
+          <div style="font-size:3rem">🏡</div>
+          <h5 class="fw-display text-white mt-3">Sua chácara aqui</h5>
+          <p class="text-white-50 mb-3">Cadastre sua propriedade e comece a receber reservas hoje mesmo.</p>
+          <a href="{% url "chacara_create" %}" class="btn btn-primary btn-sm">Cadastrar Agora</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock hero %}
+
+{% block conteudo %}
+
+<!-- Seção rápida de recursos -->
+<section class="py-5 bg-surface-alt">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="fw-display mb-2">Por que escolher nossa plataforma?</h2>
+      <p class="text-secondary">Oferecemos as melhores ferramentas para proprietários e clientes.</p>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card-petrol p-4 h-100 text-center">
+          <div class="feature-icon bg-primary bg-opacity-10 mx-auto mb-3"><i class="bi bi-search fs-4 text-primary"></i></div>
+          <h5 class="fw-display mb-2">Busca Facilitada</h5>
+          <p class="text-secondary mb-0">Filtre por piscina, churrasqueira, número de quartos e muito mais.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-petrol p-4 h-100 text-center">
+          <div class="feature-icon bg-success bg-opacity-10 mx-auto mb-3"><i class="bi bi-shield-check fs-4 text-success"></i></div>
+          <h5 class="fw-display mb-2">Reservas Seguras</h5>
+          <p class="text-secondary mb-0">Sistema de agendamento direto e confirmação rápida.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-petrol p-4 h-100 text-center">
+          <div class="feature-icon bg-info bg-opacity-10 mx-auto mb-3"><i class="bi bi-cash-stack fs-4 text-info"></i></div>
+          <h5 class="fw-display mb-2">Melhores Preços</h5>
+          <p class="text-secondary mb-0">Negocie diretamente e encontre as melhores diárias da região.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA simples -->
+<section class="py-5 bg-petrol">
+  <div class="container text-center">
+    <h3 class="fw-display text-white mb-2">Pronto para relaxar?</h3>
+    <p class="text-white-75 mb-3" style="max-width:600px; margin:0 auto">Escolha sua chácara favorita e faça sua reserva em poucos cliques.</p>
+    <div class="d-flex justify-content-center gap-3">
+      <a href="{% url "reserva_create" %}" class="btn btn-light px-4 rounded-2 fw-semibold"><i class="bi bi-calendar-event me-1"></i>Reservar Agora</a>
+      <a href="{% url "sobre" %}" class="btn btn-auth px-4 rounded-2"><i class="bi bi-info-circle me-1"></i>Saiba mais</a>
+    </div>
+  </div>
+</section>
+
+{% endblock conteudo %}
