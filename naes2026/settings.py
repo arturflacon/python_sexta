@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     # Ativar meus apps
     "website.apps.WebsiteConfig",
     "aluguel.apps.AluguelConfig",
+
+    #Complementos
+    'crispy_forms',
+    "crispy_bootstrap5",      
 ]
 
 MIDDLEWARE = [
@@ -54,7 +58,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'naes2026.urls'
+
 
 TEMPLATES = [
     {
@@ -126,3 +132,8 @@ STATICFILES_DIRS = [ BASE_DIR / "static" ]
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Configurações do Crispy Forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
