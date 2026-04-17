@@ -67,30 +67,65 @@
             </a>
           </li>
 
-          <!-- Dropdown: Cadastros -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button"
-               data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-plus-circle me-1"></i>Cadastros
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "chacara_list" %}">
+                <i class="bi bi-house-door me-1"></i>Chácaras
             </a>
-            <ul class="dropdown-menu shadow">
-              <li><a class="dropdown-item" href="{% url "chacara_create" %}"><i class="bi bi-house-add me-2"></i>Nova Chácara</a></li>
-              <li><a class="dropdown-item" href="{% url "cliente_create" %}"><i class="bi bi-person-plus me-2"></i>Novo Cliente</a></li>
-              <li><a class="dropdown-item" href="{% url "reserva_create" %}"><i class="bi bi-calendar-plus me-2"></i>Nova Reserva</a></li>
-            </ul>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "calendario_reservas" %}">
+                <i class="bi bi-calendar3 me-1"></i>Disponibilidade
+            </a>
+          </li>
+
+          {% if user.is_authenticated %}
+            {% if user.cliente %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "reserva_create" %}">
+                    <i class="bi bi-calendar-plus me-1"></i>Reservar
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "minhas_reservas" %}">
+                    <i class="bi bi-list-check me-1"></i>Minhas Reservas
+                </a>
+              </li>
+            {% endif %}
+            {% if user.administrador %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-gear me-1"></i>Admin
+                </a>
+                <ul class="dropdown-menu shadow">
+                  <li><a class="dropdown-item" href="{% url "pedidos_pendentes" %}"><i class="bi bi-hourglass-split me-2"></i>Pedidos Pendentes</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url "chacara_create" %}"><i class="bi bi-house-add me-2"></i>Nova Chácara</a></li>
+                  <li><a class="dropdown-item" href="{% url "administrador_create" %}"><i class="bi bi-person-badge me-2"></i>Novo Administrador</a></li>
+                </ul>
+              </li>
+            {% endif %}
+          {% endif %}
         </ul>
 
         <!-- Auth -->
         <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
-          <div id="authGuest" class="d-flex gap-2">
-            <a href="#" class="btn-auth btn">
+          {% if user.is_authenticated %}
+            <span class="text-white-50 small d-none d-lg-inline">
+              <i class="bi bi-person-circle me-1"></i>{{ user.username }}
+            </span>
+            <a href="{% url "logout" %}" class="btn-auth btn">
+              <i class="bi bi-box-arrow-right me-1"></i>Sair
+            </a>
+          {% else %}
+            <a href="{% url "login" %}" class="btn-auth btn">
               <i class="bi bi-box-arrow-in-right me-1"></i>Entrar
             </a>
-            <a href="{% url "cliente_create" %}" class="btn btn-primary btn-sm px-3 fw-semibold rounded-2">
+            <a href="{% url "signup" %}" class="btn btn-primary btn-sm px-3 fw-semibold rounded-2">
               Cadastrar-se
             </a>
-          </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -133,8 +168,9 @@
         <div class="col-6 col-lg-2">
           <h6 class="text-white fw-bold mb-3">Serviços</h6>
           <ul class="list-unstyled small d-grid gap-2">
-            <li><a href="{% url "chacara_create" %}" class="text-white-50">Anunciar Chácara</a></li>
+            <li><a href="{% url "chacara_list" %}" class="text-white-50">Ver Chácaras</a></li>
             <li><a href="{% url "reserva_create" %}" class="text-white-50">Fazer Reserva</a></li>
+            <li><a href="{% url "calendario_reservas" %}" class="text-white-50">Disponibilidade</a></li>
           </ul>
         </div>
       </div>

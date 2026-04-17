@@ -1,3 +1,38 @@
-{% extends 'website/base_form.html' %}
+{% extends "website/modelo.html" %}
+{% load crispy_forms_tags %}
 
-{% block title %}Cadastro de Reserva{% endblock %}
+{% block title %}{{ titulo }} — Chácara Aluguel{% endblock %}
+
+{% block main %}
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="card shadow-sm border-0 rounded-3">
+      <div class="card-header bg-primary text-white py-3">
+        <h4 class="mb-0 fw-display"><i class="bi bi-calendar-plus me-2"></i>{{ titulo }}</h4>
+      </div>
+      <div class="card-body p-4">
+        <div class="alert alert-info small mb-3">
+          <i class="bi bi-info-circle me-1"></i>
+          Consulte a <a href="{% url 'calendario_reservas' %}">página de disponibilidade</a>
+          antes de escolher as datas.
+        </div>
+        <form method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger py-2 small mt-2">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
+          <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-primary px-4">
+              <i class="bi bi-check-circle me-1"></i>{{ botao|default:"Salvar" }}
+            </button>
+            <a href="{% url 'index' %}" class="btn btn-outline-secondary px-4">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,14 +1,14 @@
 {% extends "website/modelo.html" %}
 {% load crispy_forms_tags %}
 
-{% block title %}{{ titulo }} — Chácara Aluguel{% endblock %}
+{% block title %}Cadastro — Chácara Aluguel{% endblock %}
 
 {% block main %}
 <div class="row justify-content-center">
-  <div class="col-md-8">
+  <div class="col-md-7">
     <div class="card shadow-sm border-0 rounded-3">
       <div class="card-header bg-primary text-white py-3">
-        <h4 class="mb-0 fw-display"><i class="bi bi-house-add me-2"></i>{{ titulo }}</h4>
+        <h4 class="mb-0 fw-display"><i class="bi bi-person-plus me-2"></i>{{ titulo }}</h4>
       </div>
       <div class="card-body p-4">
         <form method="post">
@@ -16,9 +16,9 @@
           {{ form|crispy }}
           <div class="d-flex gap-2 mt-4">
             <button type="submit" class="btn btn-primary px-4">
-              <i class="bi bi-check-circle me-1"></i>{{ botao|default:"Salvar" }}
+              <i class="bi bi-check-circle me-1"></i>{{ botao }}
             </button>
-            <a href="{% url 'chacara_list' %}" class="btn btn-outline-secondary px-4">Cancelar</a>
+            <a href="{% url 'login' %}" class="btn btn-outline-secondary px-4">Já tenho conta</a>
           </div>
         </form>
       </div>

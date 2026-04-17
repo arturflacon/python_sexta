@@ -1,0 +1,72 @@
+{% extends "website/modelo.html" %}
+
+{% block title %}Pedidos Pendentes — Chácara Aluguel{% endblock %}
+
+{% block main %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-display mb-0">
+    <i class="bi bi-hourglass-split me-2 text-warning"></i>Pedidos Pendentes
+  </h2>
+  <span class="badge bg-warning text-dark fs-6">{{ reservas|length }} pendente{{ reservas|length|pluralize }}</span>
+</div>
+
+{% if reservas %}
+  <div class="row g-4">
+    {% for r in reservas %}
+    <div class="col-12">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <h5 class="fw-display mb-1">{{ r.cliente.nome }}</h5>
+              <p class="text-secondary small mb-1">
+                <i class="bi bi-telephone me-1"></i>{{ r.cliente.telefone }}
+              </p>
+              <p class="mb-1"><strong>Chácara:</strong> {{ r.chacara.nome }}</p>
+              <p class="mb-1">
+                <strong>Período:</strong>
+                {{ r.data_inicio|date:"d/m/Y" }} até {{ r.data_fim|date:"d/m/Y" }}
+              </p>
+              {% if r.observacoes %}
+              <p class="mb-0 text-secondary small">
+                <strong>Obs:</strong> {{ r.observacoes }}
+              </p>
+              {% endif %}
+            </div>
+            <div class="col-md-3 text-md-center">
+              <p class="mb-1 text-secondary small">Pedido em</p>
+              <p class="mb-0 fw-semibold">{{ r.data_pedido|date:"d/m/Y H:i" }}</p>
+              {% if r.valor_total %}
+              <p class="mt-1 mb-0 text-success fw-bold">R$ {{ r.valor_total|floatformat:2 }}</p>
+              {% endif %}
+            </div>
+            <div class="col-md-3 d-flex flex-column gap-2 mt-3 mt-md-0">
+              <form method="post" action="{% url 'reserva_aprovar' r.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success w-100">
+                  <i class="bi bi-check-lg me-1"></i>Aprovar
+                </button>
+              </form>
+              <form method="post" action="{% url 'reserva_recusar' r.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger w-100">
+                  <i class="bi bi-x-lg me-1"></i>Recusar
+                </button>
+              </form>
+              <a href="{% url 'reserva_update' r.pk %}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-pencil me-1"></i>Editar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-success">
+    <i class="bi bi-check-circle me-2"></i>
+    Nenhum pedido pendente. Tudo em dia!
+  </div>
+{% endif %}
+{% endblock %}

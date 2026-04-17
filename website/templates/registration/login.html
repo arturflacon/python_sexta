@@ -1,0 +1,37 @@
+{% extends "website/modelo.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Entrar — Chácara Aluguel{% endblock %}
+
+{% block main %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow-sm border-0 rounded-3">
+      <div class="card-header bg-primary text-white py-3">
+        <h4 class="mb-0 fw-display"><i class="bi bi-box-arrow-in-right me-2"></i>Entrar</h4>
+      </div>
+      <div class="card-body p-4">
+        <form method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          {% if form.errors %}
+            <div class="alert alert-danger py-2 small">
+              Usuário ou senha inválidos. Tente novamente.
+            </div>
+          {% endif %}
+          <div class="d-grid mt-3">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-box-arrow-in-right me-1"></i>Entrar
+            </button>
+          </div>
+        </form>
+        <hr>
+        <p class="text-center text-secondary small mb-0">
+          Não tem conta?
+          <a href="{% url 'signup' %}">Cadastre-se</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
