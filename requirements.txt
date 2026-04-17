@@ -6,5 +6,5 @@ crispy-bootstrap5==2025.6
 django-debug-toolbar==6.1.0
 django-extensions==4.1
 django-filter==25.1
-psycopg2==2.9.10
+# psycopg2-binary  # necessário apenas em produção (Neon/Postgres)
 python-dateutil==2.9.0.post0

@@ -18,10 +18,11 @@ from .models import Administrador, Chacara, Cliente, Reserva
 # ---------------------------------------------------------------------------
 
 class AdminRequiredMixin(UserPassesTestMixin):
-    """Permite acesso apenas a usuários com perfil Administrador."""
+    """Permite acesso a superusers ou usuários com perfil Administrador."""
 
     def test_func(self):
-        return self.request.user.is_authenticated and hasattr(self.request.user, 'administrador')
+        u = self.request.user
+        return u.is_authenticated and (u.is_superuser or hasattr(u, 'administrador'))
 
 
 # ---------------------------------------------------------------------------
@@ -31,13 +32,10 @@ class AdminRequiredMixin(UserPassesTestMixin):
 class IndexView(TemplateView):
     template_name = 'website/index.html'
 
-
-class ContatoView(TemplateView):
-    template_name = 'website/contato.html'
-
-
-class SobreView(TemplateView):
-    template_name = 'website/sobre.html'
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['chacara'] = Chacara.objects.first()
+        return ctx
 
 
 class CalendarioReservasView(ListView):
@@ -49,16 +47,14 @@ class CalendarioReservasView(ListView):
         return Reserva.objects.filter(status=Reserva.STATUS_CONFIRMADA).order_by('data_inicio')
 
 
-class ChacaraListView(ListView):
-    model = Chacara
-    template_name = 'website/chacara_list.html'
-    context_object_name = 'chacaras'
-
-
-class ChacaraDetailView(DetailView):
+class ChacaraUnicaView(DetailView):
+    """Exibe sempre a única chácara do sistema."""
     model = Chacara
     template_name = 'website/chacara_detail.html'
     context_object_name = 'chacara'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Chacara)
 
 
 # ---------------------------------------------------------------------------
@@ -91,9 +87,14 @@ class ReservaCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         reserva = form.save(commit=False)
         reserva.cliente = get_object_or_404(Cliente, usuario=self.request.user)
+        chacara = Chacara.objects.first()
+        if not chacara:
+            form.add_error(None, 'Nenhuma chácara cadastrada no sistema.')
+            return self.form_invalid(form)
+        reserva.chacara = chacara
         reserva.status = Reserva.STATUS_PENDENTE
-        reserva.full_clean()
-        return super().form_valid(form)
+        reserva.save()
+        return redirect(self.success_url)
 
 
 class MinhasReservasListView(LoginRequiredMixin, ListView):
@@ -156,50 +157,24 @@ class ReservaDeleteView(AdminRequiredMixin, DeleteView):
 
 
 # ---------------------------------------------------------------------------
-# CRUD de Chácara (admin)
+# Edição da chácara (apenas admin — sem criar/excluir pela UI)
 # ---------------------------------------------------------------------------
-
-CHACARA_FIELDS = [
-    'nome', 'descricao', 'preco_diaria',
-    'tem_estacionamento', 'tem_piscina', 'tem_churrasqueira',
-    'num_quartos', 'num_banheiros',
-]
-
-
-class ChacaraCreate(AdminRequiredMixin, CreateView):
-    model = Chacara
-    fields = CHACARA_FIELDS
-    template_name = 'website/chacara_form.html'
-    success_url = reverse_lazy('chacara_list')
-    extra_context = {'titulo': 'Cadastrar Chácara', 'botao': 'Cadastrar'}
-
 
 class ChacaraUpdate(AdminRequiredMixin, UpdateView):
     model = Chacara
-    fields = CHACARA_FIELDS
+    fields = [
+        'nome', 'descricao', 'preco_diaria',
+        'tem_estacionamento', 'tem_piscina', 'tem_churrasqueira',
+        'num_quartos', 'num_banheiros',
+    ]
     template_name = 'website/chacara_form.html'
-    success_url = reverse_lazy('chacara_list')
+    success_url = reverse_lazy('chacara_unica')
     extra_context = {'titulo': 'Editar Chácara', 'botao': 'Salvar Alterações'}
 
 
-class ChacaraDelete(AdminRequiredMixin, DeleteView):
-    model = Chacara
-    template_name = 'website/chacara_confirm_delete.html'
-    success_url = reverse_lazy('chacara_list')
-    extra_context = {'titulo': 'Excluir Chácara', 'botao': 'Confirmar Exclusão'}
-
-
 # ---------------------------------------------------------------------------
-# CRUD de Cliente (admin ou próprio usuário)
+# Cliente
 # ---------------------------------------------------------------------------
-
-class ClienteCreate(CreateView):
-    model = Cliente
-    fields = ['nome', 'telefone', 'usuario']
-    template_name = 'website/cliente_form.html'
-    success_url = reverse_lazy('index')
-    extra_context = {'titulo': 'Cadastro de Cliente', 'botao': 'Cadastrar Cliente'}
-
 
 class ClienteUpdate(LoginRequiredMixin, UpdateView):
     model = Cliente

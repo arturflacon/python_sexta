@@ -108,19 +108,20 @@ class Reserva(models.Model):
             if self.data_fim < self.data_inicio:
                 raise ValidationError({'data_fim': 'A data de fim não pode ser anterior à data de início.'})
 
-            conflitos = Reserva.objects.filter(
-                chacara=self.chacara,
-                status=self.STATUS_CONFIRMADA,
-                data_inicio__lt=self.data_fim,
-                data_fim__gt=self.data_inicio,
-            )
-            if self.pk:
-                conflitos = conflitos.exclude(pk=self.pk)
-            if conflitos.exists():
-                raise ValidationError(
-                    'Já existe uma reserva confirmada que se sobrepõe a estas datas. '
-                    'Consulte o calendário de disponibilidade antes de escolher as datas.'
+            if self.chacara_id:
+                conflitos = Reserva.objects.filter(
+                    chacara_id=self.chacara_id,
+                    status=self.STATUS_CONFIRMADA,
+                    data_inicio__lt=self.data_fim,
+                    data_fim__gt=self.data_inicio,
                 )
+                if self.pk:
+                    conflitos = conflitos.exclude(pk=self.pk)
+                if conflitos.exists():
+                    raise ValidationError(
+                        'Já existe uma reserva confirmada que se sobrepõe a estas datas. '
+                        'Consulte o calendário de disponibilidade antes de escolher as datas.'
+                    )
 
     def save(self, *args, **kwargs):
         if self.data_inicio and self.data_fim and self.chacara_id:

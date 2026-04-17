@@ -1,30 +1,55 @@
 {% extends "website/modelo.html" %}
-
 {% load static %}
 
+{% block title %}Início — Sítio de Lurdes{% endblock %}
+
 {% block hero %}
-<!-- Hero compacto para home -->
 <section class="hero py-5">
   <div class="hero-noise"></div>
   <div class="container py-5">
     <div class="row align-items-center">
       <div class="col-lg-7">
         <span class="badge bg-petrol-subtle text-primary fw-semibold px-3 py-2 rounded-pill mb-3 d-inline-block" style="font-size:.75rem; letter-spacing:.05em;">
-          <i class="bi bi-house-heart me-1"></i> Chácara Aluguel
+          <i class="bi bi-house-heart me-1"></i> Aluguel de Chácara
         </span>
-        <h1 class="display-4 fw-display text-white mb-3">Encontre a chácara ideal<br><span style="color:var(--petrol-lighter)">para o seu lazer</span></h1>
-        <p class="text-white-75 mb-4" style="max-width:560px; line-height:1.6">Explore as melhores opções de chácaras para eventos, finais de semana em família ou momentos de descanso. Simples, rápido e seguro.</p>
+        <h1 class="display-4 fw-display text-white mb-3">
+          Sítio de Lurdes<br>
+          <span style="color:var(--petrol-lighter)">seu refúgio de lazer</span>
+        </h1>
+        <p class="text-white-75 mb-4" style="max-width:560px; line-height:1.6">
+          Piscina, churrasqueira, natureza e muito espaço para criar memórias inesquecíveis com quem você ama.
+          Reserve agora e garanta sua data!
+        </p>
         <div class="d-flex gap-3">
-          <a href="{% url "chacara_create" %}" class="btn btn-light fw-semibold px-4 rounded-2"><i class="bi bi-plus-circle me-1"></i>Anunciar Chácara</a>
-          <a href="{% url "reserva_create" %}" class="btn btn-auth px-4 rounded-2"><i class="bi bi-calendar-check me-1"></i>Fazer Reserva</a>
+          <a href="{% url "chacara_unica" %}" class="btn btn-light fw-semibold px-4 rounded-2">
+            <i class="bi bi-house-door me-1"></i>Conhecer a Chácara
+          </a>
+          <a href="{% url "reserva_create" %}" class="btn btn-auth px-4 rounded-2">
+            <i class="bi bi-calendar-check me-1"></i>Fazer Reserva
+          </a>
         </div>
       </div>
       <div class="col-lg-5 d-none d-lg-block">
         <div class="card-petrol p-4 rounded-2xl text-center" style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08)">
           <div style="font-size:3rem">🏡</div>
-          <h5 class="fw-display text-white mt-3">Sua chácara aqui</h5>
-          <p class="text-white-50 mb-3">Cadastre sua propriedade e comece a receber reservas hoje mesmo.</p>
-          <a href="{% url "chacara_create" %}" class="btn btn-primary btn-sm">Cadastrar Agora</a>
+          {% if chacara %}
+            <h5 class="fw-display text-white mt-3">{{ chacara.nome }}</h5>
+            <p class="text-white-50 mb-1">
+              <i class="bi bi-door-open me-1"></i>{{ chacara.num_quartos }} quartos
+              &nbsp;·&nbsp;
+              <i class="bi bi-water me-1"></i>{{ chacara.num_banheiros }} banheiros
+            </p>
+            <div class="d-flex justify-content-center gap-2 mb-3 flex-wrap">
+              {% if chacara.tem_piscina %}<span class="badge bg-info text-dark">Piscina</span>{% endif %}
+              {% if chacara.tem_churrasqueira %}<span class="badge bg-warning text-dark">Churrasqueira</span>{% endif %}
+              {% if chacara.tem_estacionamento %}<span class="badge bg-secondary">Estacionamento</span>{% endif %}
+            </div>
+            <p class="text-white fw-bold mb-3">R$ {{ chacara.preco_diaria|floatformat:2 }} <span class="text-white-50 fw-normal small">/ dia</span></p>
+          {% else %}
+            <h5 class="fw-display text-white mt-3">Sítio de Lurdes</h5>
+            <p class="text-white-50 mb-3">Piscina · Churrasqueira · Estacionamento</p>
+          {% endif %}
+          <a href="{% url "reserva_create" %}" class="btn btn-primary btn-sm px-4">Reservar Agora</a>
         </div>
       </div>
     </div>
@@ -34,48 +59,53 @@
 
 {% block conteudo %}
 
-<!-- Seção rápida de recursos -->
+<!-- Destaques da chácara -->
 <section class="py-5 bg-surface-alt">
   <div class="container">
     <div class="text-center mb-4">
-      <h2 class="fw-display mb-2">Por que escolher nossa plataforma?</h2>
-      <p class="text-secondary">Oferecemos as melhores ferramentas para proprietários e clientes.</p>
+      <h2 class="fw-display mb-2">Por que escolher o Sítio de Lurdes?</h2>
+      <p class="text-secondary">Tudo que você precisa para um fim de semana perfeito.</p>
     </div>
-    
     <div class="row g-4">
       <div class="col-md-4">
         <div class="card-petrol p-4 h-100 text-center">
-          <div class="feature-icon bg-primary bg-opacity-10 mx-auto mb-3"><i class="bi bi-search fs-4 text-primary"></i></div>
-          <h5 class="fw-display mb-2">Busca Facilitada</h5>
-          <p class="text-secondary mb-0">Filtre por piscina, churrasqueira, número de quartos e muito mais.</p>
+          <div class="feature-icon bg-info bg-opacity-10 mx-auto mb-3"><i class="bi bi-droplet fs-4 text-info"></i></div>
+          <h5 class="fw-display mb-2">Piscina</h5>
+          <p class="text-secondary mb-0">Mergulhe e relaxe nos dias quentes. Diversão garantida para toda a família.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-petrol p-4 h-100 text-center">
+          <div class="feature-icon bg-warning bg-opacity-10 mx-auto mb-3"><i class="bi bi-fire fs-4 text-warning"></i></div>
+          <h5 class="fw-display mb-2">Churrasqueira</h5>
+          <p class="text-secondary mb-0">Reúna a galera para um churrasco e crie memórias deliciosas juntos.</p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card-petrol p-4 h-100 text-center">
           <div class="feature-icon bg-success bg-opacity-10 mx-auto mb-3"><i class="bi bi-shield-check fs-4 text-success"></i></div>
-          <h5 class="fw-display mb-2">Reservas Seguras</h5>
-          <p class="text-secondary mb-0">Sistema de agendamento direto e confirmação rápida.</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card-petrol p-4 h-100 text-center">
-          <div class="feature-icon bg-info bg-opacity-10 mx-auto mb-3"><i class="bi bi-cash-stack fs-4 text-info"></i></div>
-          <h5 class="fw-display mb-2">Melhores Preços</h5>
-          <p class="text-secondary mb-0">Negocie diretamente e encontre as melhores diárias da região.</p>
+          <h5 class="fw-display mb-2">Reserva Segura</h5>
+          <p class="text-secondary mb-0">Processo simples e direto. Faça seu pedido e aguarde a confirmação.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA simples -->
+<!-- CTA -->
 <section class="py-5 bg-petrol">
   <div class="container text-center">
-    <h3 class="fw-display text-white mb-2">Pronto para relaxar?</h3>
-    <p class="text-white-75 mb-3" style="max-width:600px; margin:0 auto">Escolha sua chácara favorita e faça sua reserva em poucos cliques.</p>
+    <h3 class="fw-display text-white mb-2">Pronto para reservar?</h3>
+    <p class="text-white-75 mb-3" style="max-width:600px; margin:0 auto">
+      Verifique a disponibilidade e faça seu pedido em poucos cliques.
+    </p>
     <div class="d-flex justify-content-center gap-3">
-      <a href="{% url "reserva_create" %}" class="btn btn-light px-4 rounded-2 fw-semibold"><i class="bi bi-calendar-event me-1"></i>Reservar Agora</a>
-      <a href="{% url "sobre" %}" class="btn btn-auth px-4 rounded-2"><i class="bi bi-info-circle me-1"></i>Saiba mais</a>
+      <a href="{% url "calendario_reservas" %}" class="btn btn-light px-4 rounded-2 fw-semibold">
+        <i class="bi bi-calendar3 me-1"></i>Ver Disponibilidade
+      </a>
+      <a href="{% url "reserva_create" %}" class="btn btn-auth px-4 rounded-2">
+        <i class="bi bi-calendar-event me-1"></i>Reservar Agora
+      </a>
     </div>
   </div>
 </section>

@@ -19,7 +19,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'website.apps.WebsiteConfig',
-    'aluguel.apps.AluguelConfig',
 
     'crispy_forms',
     'crispy_bootstrap5',

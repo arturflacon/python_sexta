@@ -3,9 +3,9 @@ from django.urls import path
 
 from .views import (
     # Públicas
-    IndexView, ContatoView, SobreView,
+    IndexView,
     CalendarioReservasView,
-    ChacaraListView, ChacaraDetailView,
+    ChacaraUnicaView,
     # Auth / cadastro
     SignupView,
     # Cliente autenticado
@@ -13,34 +13,24 @@ from .views import (
     # Admin — reservas
     PedidosPendentesListView, AprovarReservaView, RecusarReservaView,
     ReservaUpdateView, ReservaDeleteView,
-    # Admin — chácara
-    ChacaraCreate, ChacaraUpdate, ChacaraDelete,
+    # Admin — chácara (só edição)
+    ChacaraUpdate,
     # Admin — outros
     AdministradorCreate,
     # Cliente
-    ClienteCreate, ClienteUpdate,
+    ClienteUpdate,
 )
 
 urlpatterns = [
     # --- Páginas públicas ---
     path('', IndexView.as_view(), name='index'),
-    path('contato/', ContatoView.as_view(), name='contato'),
-    path('sobre/', SobreView.as_view(), name='sobre'),
     path('disponibilidade/', CalendarioReservasView.as_view(), name='calendario_reservas'),
+    path('chacara/', ChacaraUnicaView.as_view(), name='chacara_unica'),
 
     # --- Auth ---
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('cadastro/', SignupView.as_view(), name='signup'),
-
-    # --- Chácaras (públicas) ---
-    path('chacaras/', ChacaraListView.as_view(), name='chacara_list'),
-    path('chacaras/<int:pk>/', ChacaraDetailView.as_view(), name='chacara_detail'),
-
-    # --- Chácaras (admin) ---
-    path('chacaras/nova/', ChacaraCreate.as_view(), name='chacara_create'),
-    path('chacaras/<int:pk>/editar/', ChacaraUpdate.as_view(), name='chacara_update'),
-    path('chacaras/<int:pk>/excluir/', ChacaraDelete.as_view(), name='chacara_delete'),
 
     # --- Reservas (cliente) ---
     path('reservas/nova/', ReservaCreate.as_view(), name='reserva_create'),
@@ -53,10 +43,12 @@ urlpatterns = [
     path('reservas/<int:pk>/editar/', ReservaUpdateView.as_view(), name='reserva_update'),
     path('reservas/<int:pk>/excluir/', ReservaDeleteView.as_view(), name='reserva_delete'),
 
-    # --- Clientes ---
-    path('cliente/cadastro/', ClienteCreate.as_view(), name='cliente_create'),
-    path('cliente/<int:pk>/editar/', ClienteUpdate.as_view(), name='cliente_update'),
+    # --- Chácara (admin — só edição) ---
+    path('chacara/<int:pk>/editar/', ChacaraUpdate.as_view(), name='chacara_update'),
 
     # --- Admin ---
     path('administrador/cadastro/', AdministradorCreate.as_view(), name='administrador_create'),
+
+    # --- Cliente ---
+    path('cliente/<int:pk>/editar/', ClienteUpdate.as_view(), name='cliente_update'),
 ]

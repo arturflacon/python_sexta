@@ -1,6 +1,6 @@
 {% extends "website/modelo.html" %}
 
-{% block title %}Disponibilidade — Chácara Aluguel{% endblock %}
+{% block title %}Disponibilidade — Sítio de Lurdes{% endblock %}
 
 {% block main %}
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -20,17 +20,27 @@
     <table class="table table-hover align-middle">
       <thead class="table-primary">
         <tr>
-          <th>Chácara</th>
           <th>Entrada</th>
           <th>Saída</th>
+          {% if user.is_superuser or user.administrador %}
+          <th>Cliente</th>
+          <th>Telefone</th>
+          {% endif %}
         </tr>
       </thead>
       <tbody>
         {% for r in reservas %}
         <tr>
-          <td><strong>{{ r.chacara.nome }}</strong></td>
           <td>{{ r.data_inicio|date:"d/m/Y" }}</td>
           <td>{{ r.data_fim|date:"d/m/Y" }}</td>
+          {% if user.is_superuser or user.administrador %}
+          <td><strong>{{ r.cliente.nome }}</strong></td>
+          <td>
+            <a href="tel:{{ r.cliente.telefone }}" class="text-decoration-none">
+              <i class="bi bi-telephone me-1 text-primary"></i>{{ r.cliente.telefone }}
+            </a>
+          </td>
+          {% endif %}
         </tr>
         {% endfor %}
       </tbody>

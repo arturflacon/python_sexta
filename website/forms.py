@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Cliente, Reserva
+from .models import Chacara, Cliente, Reserva
 
 
 class SignupForm(UserCreationForm):
@@ -42,8 +42,37 @@ class SignupForm(UserCreationForm):
 class ReservaClienteForm(forms.ModelForm):
     class Meta:
         model = Reserva
-        fields = ['chacara', 'data_inicio', 'data_fim', 'observacoes']
+        fields = ['data_inicio', 'data_fim', 'observacoes']
         widgets = {
             'data_inicio': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'data_fim': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
         }
+
+    def clean(self):
+        cleaned = super().clean()
+        inicio = cleaned.get('data_inicio')
+        fim = cleaned.get('data_fim')
+
+        if inicio and fim:
+            if fim < inicio:
+                raise forms.ValidationError(
+                    {'data_fim': 'A data de saída não pode ser anterior à data de chegada.'}
+                )
+
+            chacara = Chacara.objects.first()
+            if chacara:
+                conflito = Reserva.objects.filter(
+                    chacara=chacara,
+                    status=Reserva.STATUS_CONFIRMADA,
+                    data_inicio__lt=fim,
+                    data_fim__gt=inicio,
+                )
+                if self.instance.pk:
+                    conflito = conflito.exclude(pk=self.instance.pk)
+                if conflito.exists():
+                    raise forms.ValidationError(
+                        'Já existe uma reserva confirmada nesse período. '
+                        'Consulte a página de disponibilidade e escolha outras datas.'
+                    )
+
+        return cleaned
