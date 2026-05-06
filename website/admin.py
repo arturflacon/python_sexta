@@ -29,3 +29,4 @@ class ReservaAdmin(admin.ModelAdmin):
     search_fields = ['cliente__nome', 'chacara__nome']
     date_hierarchy = 'data_inicio'
     readonly_fields = ['data_pedido', 'valor_total']
+
