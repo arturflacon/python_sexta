@@ -56,6 +56,12 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "sobre" %}">
+              <i class="bi bi-info-circle me-1"></i>Sobre
+            </a>
+          </li>
+
           {% if user.is_authenticated %}
             {% if user.cliente %}
               <li class="nav-item">
@@ -144,6 +150,7 @@
             <li><a href="{% url "index" %}" class="text-white-50">Início</a></li>
             <li><a href="{% url "chacara_unica" %}" class="text-white-50">A Chácara</a></li>
             <li><a href="{% url "calendario_reservas" %}" class="text-white-50">Disponibilidade</a></li>
+            <li><a href="{% url "sobre" %}" class="text-white-50">Sobre</a></li>
           </ul>
         </div>
         <div class="col-6 col-lg-2">

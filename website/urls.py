@@ -4,6 +4,7 @@ from django.urls import path
 from .views import (
     # Públicas
     IndexView,
+    SobreView,
     CalendarioReservasView,
     ChacaraUnicaView,
     # Auth / cadastro
@@ -24,6 +25,7 @@ from .views import (
 urlpatterns = [
     # --- Páginas públicas ---
     path('', IndexView.as_view(), name='index'),
+    path('sobre/', SobreView.as_view(), name='sobre'),
     path('disponibilidade/', CalendarioReservasView.as_view(), name='calendario_reservas'),
     path('chacara/', ChacaraUnicaView.as_view(), name='chacara_unica'),
 

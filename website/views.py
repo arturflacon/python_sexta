@@ -38,6 +38,15 @@ class IndexView(TemplateView):
         return ctx
 
 
+class SobreView(TemplateView):
+    template_name = 'website/sobre.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['chacara'] = Chacara.objects.first()
+        return ctx
+
+
 class CalendarioReservasView(ListView):
     model = Reserva
     template_name = 'website/calendario_reservas.html'
