@@ -4,6 +4,7 @@ from django.urls import path
 from .views import (
     # Públicas
     IndexView,
+    ReservaDetailView,
     SobreView,
     CalendarioReservasView,
     ChacaraUnicaView,
@@ -44,6 +45,7 @@ urlpatterns = [
     path('reservas/<int:pk>/recusar/', RecusarReservaView.as_view(), name='reserva_recusar'),
     path('reservas/<int:pk>/editar/', ReservaUpdateView.as_view(), name='reserva_update'),
     path('reservas/<int:pk>/excluir/', ReservaDeleteView.as_view(), name='reserva_delete'),
+    path('reservas/<int:pk>/', ReservaDetailView.as_view(), name='reserva_detail'),
 
     # --- Chácara (admin — só edição) ---
     path('chacara/<int:pk>/editar/', ChacaraUpdate.as_view(), name='chacara_update'),
@@ -53,4 +55,5 @@ urlpatterns = [
 
     # --- Cliente ---
     path('cliente/<int:pk>/editar/', ClienteUpdate.as_view(), name='cliente_update'),
+    
 ]
