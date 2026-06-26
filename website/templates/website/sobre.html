@@ -103,5 +103,71 @@
   </div>
 </section>
 
+<!-- ===== DIAGRAMA DE CASOS DE USO ===== -->
+<section class="mb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="card-header py-3 px-4" style="background: var(--petrol-50); border-bottom: 2px solid var(--petrol-200);">
+          <h2 class="h5 fw-bold mb-0" style="color: var(--petrol-700);">
+            <i class="bi bi-diagram-2 me-2"></i>Diagrama de Casos de Uso
+          </h2>
+        </div>
+        <div class="card-body p-4 p-lg-5">
+          <p class="text-secondary mb-4">
+            O diagrama abaixo apresenta os <strong>atores</strong> do sistema (Cliente e Administrador)
+            e as <strong>funcionalidades</strong> que cada um pode executar, evidenciando o escopo de
+            uso da aplicação.
+          </p>
+
+          <figure class="text-center mb-0">
+            <img src="{% static 'img/diagrama_casos_uso.png' %}"
+                 alt="Diagrama de Casos de Uso — Sistema de Aluguel de Chácara"
+                 class="img-fluid rounded-3 border"
+                 style="border-color: var(--petrol-200) !important;">
+            <figcaption class="small text-secondary mt-3">
+              <i class="bi bi-image me-1"></i>
+              Figura 1 — Casos de uso do sistema, organizados por ator.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DIAGRAMA DE CLASSES ===== -->
+<section class="mb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="card-header py-3 px-4" style="background: var(--petrol-50); border-bottom: 2px solid var(--petrol-200);">
+          <h2 class="h5 fw-bold mb-0" style="color: var(--petrol-700);">
+            <i class="bi bi-diagram-3 me-2"></i>Diagrama de Classes
+          </h2>
+        </div>
+        <div class="card-body p-4 p-lg-5">
+          <p class="text-secondary mb-4">
+            Modelo de domínio do app <code>website</code>. Apresenta as entidades
+            <strong>Cliente</strong>, <strong>Administrador</strong>, <strong>Chácara</strong> e
+            <strong>Reserva</strong>, seus atributos, métodos e os relacionamentos entre elas, além
+            das regras de negócio aplicadas sobre <em>Reserva</em>.
+          </p>
+
+          <figure class="text-center mb-0">
+            <img src="{% static 'img/diagrama_classes.png' %}"
+                 alt="Diagrama de Classes — Modelo de domínio do app website"
+                 class="img-fluid rounded-3 border"
+                 style="border-color: var(--petrol-200) !important;">
+            <figcaption class="small text-secondary mt-3">
+              <i class="bi bi-image me-1"></i>
+              Figura 2 — Estrutura de classes do app <code>website</code>.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

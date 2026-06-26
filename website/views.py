@@ -117,6 +117,24 @@ class MinhasReservasListView(LoginRequiredMixin, ListView):
         except Cliente.DoesNotExist:
             return Reserva.objects.none()
         return Reserva.objects.filter(cliente=cliente)
+    
+class ReservaDetailView(LoginRequiredMixin, DetailView):
+    model = Reserva
+    template_name = 'website/reserva_detail.html'
+    context_object_name = 'reserva'
+
+    def get_queryset(self):
+        """
+        Cliente vê apenas suas próprias reservas.
+        Admin/superuser vê qualquer reserva.
+        """
+        qs = super().get_queryset()
+        u = self.request.user
+        if u.is_superuser or hasattr(u, 'administrador'):
+            return qs
+        if hasattr(u, 'cliente'):
+            return qs.filter(cliente=u.cliente)
+        return qs.none()
 
 
 # ---------------------------------------------------------------------------
