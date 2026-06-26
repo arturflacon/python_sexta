@@ -18,3 +18,9 @@ Thumbs.db
 
 # Arquivos estáticos coletados
 staticfiles/
+
+# Deploy com segredos (não enviar ao GitHub público)
+app.yaml
+
+# Saída do collectstatic (gerada automaticamente)
+static_gcloud/
